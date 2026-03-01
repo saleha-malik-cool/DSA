@@ -1,0 +1,70 @@
+\\ brute force
+# include <iostream>
+ # include <vector>
+ using namespace std;
+ int missing(vector<int>&arr){
+int n = arr.size();
+vector<int> hash(n+1,0);
+    for (int i =0; i<n; i++){
+        hash[arr[i]]=1;}
+
+    
+    for(int i =0; i<=n;i++){
+        if(hash[i]==0){
+            return i;
+        }
+    }
+return -1;}
+    
+
+
+
+int main(){
+    vector<int>arr={3,0,1};
+    cout<< missing(arr);
+}
+
+
+ \\optimal(sum)
+
+
+ 
+ using namespace std;
+ int missing(vector<int>&arr){
+int n = arr.size();
+int sum1 =0;
+for(int i =0; i<n; i++){
+    sum1 = sum1+arr[i];
+}
+int sum=(n*(n+1))/2;
+    
+
+int ans = sum-sum1;
+return ans;
+}
+int main(){
+    vector<int> arr={0,1,2,4};
+    cout<<missing(arr);
+}
+
+
+\\xor
+
+
+
+# include <iostream>
+ # include <vector>
+ using namespace std;
+ int missing(vector<int>&arr){
+int n = arr.size();
+int xor1=0,xor2=0;
+ for(int i =0;i<n; i++ ){
+    xor1^=arr[i];
+    xor2^=i;
+ } 
+xor2^=n;
+return xor1^xor2;  }
+int main(){
+    vector<int>arr={0,1,2,4,5,3,7};
+    cout<<missing(arr);
+}
