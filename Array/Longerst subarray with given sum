@@ -1,0 +1,114 @@
+# BRUTE FORCE
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int subarray(vector<int>& arr, int L){
+    int n = arr.size();
+    int len = 0;
+
+    for(int i = 0; i < n; i++){
+        int sum = 0;
+
+        for(int j = i; j < n; j++){
+            sum += arr[j];
+
+            if(sum == L){
+                len = max(len, j - i + 1);
+            }
+
+            // Optional optimization (only if all numbers are positive)
+            if(sum > L) break;
+        }
+    }
+
+    return len;
+}
+
+int main(){
+    vector<int> arr = {1,2,3,1,1,1,1,4,2,3};
+    cout << subarray(arr, 3);
+}
+
+
+
+#BETTER
+
+
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int longestSubarrayWithSumK(vector<int>& arr, int K) {
+    
+    unordered_map<long long, int> prefixMap;
+    long long sum = 0;
+    int maxLen = 0;
+
+    for(int i = 0; i < arr.size(); i++) {
+        
+        sum += arr[i];
+
+        // Case 1: From index 0 to i
+        if(sum == K) {
+            maxLen = i + 1;
+        }
+
+        // Case 2: Check if (sum - K) seen before
+        if(prefixMap.find(sum - K) != prefixMap.end()) {
+            int len = i - prefixMap[sum - K];
+            maxLen = max(maxLen, len);
+        }
+
+        // Store prefix sum only first time
+        if(prefixMap.find(sum) == prefixMap.end()) {
+            prefixMap[sum] = i;
+        }
+    }
+
+    return maxLen;
+}
+
+int main() {
+    vector<int> arr = {1, -1, 5, -2, 3};
+    int K = 3;
+
+    cout << longestSubarrayWithSumK(arr, K);
+}
+
+
+#OPTIMAL
+
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int subarray(vector<int>& arr, int L){
+    int sum=0;
+    int len =0;
+    int i =0;
+   
+   int n = arr.size();
+   for(int j =0; j<n; j++){
+    sum+=arr[j];
+    while(sum>L && i<=j){
+        sum-=arr[i];
+        i++;
+    }
+    if(sum==L){
+        len=max(len,j-i+1);
+    }
+   }
+return len;}
+int main(){
+    vector <int> arrr={1,2,3,1,1,1,4,2,3};
+    int L =3;
+    cout<<subarray(arrr,L);
+}
+
+
+
