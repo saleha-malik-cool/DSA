@@ -1,0 +1,152 @@
+//BRUTE 
+
+
+
+
+#include <iostream>
+#include <vector>
+# include <unordered_set>
+
+using namespace std;
+ void markrow(vector<vector<int>>&arr, int i){
+    
+    int m = arr[0].size();
+
+    for (int j=0; j<m; j++){
+        if(arr[i][j]!=0){
+            arr[i][j]=-1;
+        }
+    }}
+    void markcol(vector<vector<int>>&arr, int j){
+        int n = arr.size();
+         
+         for (int i =0; i<n; i++){
+            if(arr[i][j]!=0){
+                arr[i][j]=-1;
+            }
+         }
+    }
+
+void matrix(vector<vector<int>> &arr){
+    int n = arr.size();
+    int m = arr[0].size();
+    for(int i =0; i<n; i++){
+         for(int j =0; j<m; j++){
+            if(arr[i][j]==0){
+                markrow(arr,i);
+                markcol(arr,j);
+            }
+         }}
+        for(int i =0; i<n; i++){
+            for(int j =0; j<m; j++){
+                if (arr[i][j]==-1){
+                    arr[i][j]=0;
+                }
+            }
+        }}
+
+
+
+
+
+int main(){
+    vector<vector<int>>arr={{1,1,1},{1,0,1},{1,1,1}};
+     matrix(arr);
+    for(int i =0; i<arr.size();i++){
+        for(int j =0; j<arr[0].size(); j++){
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+
+}
+
+//BETTER
+
+
+
+#include <iostream>
+#include <vector>
+# include <unordered_set>
+
+using namespace std;
+ void matrix(vector<vector<int>>&arr){
+    vector<int>row={0};
+    vector<int>col= {0};
+    int n = arr.size();
+    int m = arr[0].size();
+    for(int i =0; i<n; i++){
+        for(int j =0; j<m; j++){
+            if (arr[i][j]==0){
+                row[i]=1;
+                col[j]=1;
+            }
+        }
+    }
+    for(int i =0; i<n; i++){
+        for(int j =0; j<m; j++){
+            if ((row[i]|| col[j])==1){
+                arr[i][j]=0;
+            }
+
+        }
+    }
+ }
+ int main(){
+    vector<vector<int>>arr={{1,1,1,1},{1,0,1,1},{1,1,0,1},{1,0,0,1}};
+    matrix(arr);
+    for(int i =0; i<arr.size(); i++){
+        for(int j =0; j<arr[0].size(); j++){
+            cout<<arr[i][j];
+        }
+        cout<<endl;
+    }
+ }
+
+
+
+ //OPTIMAL
+
+
+
+ class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int col0=1;
+        int n = matrix.size();
+        int m = matrix[0].size();
+        for (int i =0; i<n; i++){
+            for (int j =0; j<m ; j++){
+                if(matrix[i][j]==0){
+                    matrix[i][0]=0;
+                    if (j!=0){
+                        matrix[0][j]=0;
+                    }
+                    else{
+                        col0=0;
+                    }
+                }
+            }
+        }
+        for (int i =1; i<n; i++){
+            for(int j =1; j<m; j++){
+                if (matrix[i][j]!=0){
+                    if(matrix[0][j]==0|| matrix[i][0]==0){
+                        matrix[i][j]=0;
+                    }
+                }
+            }
+        }
+        if (matrix[0][0]==0){
+            for(int j =0; j<m; j++){
+                matrix[0][j]=0;
+            }
+        }
+        if (col0==0)
+{
+    for(int i =0; i<n; i++){
+        matrix[i][0]=0;
+    }
+}        
+    }
+};
