@@ -1,0 +1,22 @@
+class Solution {
+public:
+  int NthRoot(int N, int M) {
+    int start = 0;
+    int end = M;
+    
+    while(start<=end){
+        int mid = start+(end - start)/2;
+        if(pow(mid,N)==M){
+            return mid;
+        }
+        else if(pow(mid,N)>M){
+            end = mid-1;
+        }
+        else{
+            start = mid+1;
+        }
+    }
+    return -1;
+       
+    }
+};
