@@ -1,0 +1,25 @@
+mid*mid can lead top overflow so chose instead mid== n/mid;
+
+
+class Solution {
+public:
+    int floorSqrt(int n) {
+        int start = 0;
+        int end = n;
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (mid == n / mid) {
+                return mid;
+            }
+            else if (mid > n / mid) {
+                end = mid - 1;
+            }
+            else {
+                start = mid + 1;
+            }
+        }
+        return end;
+    }
+};
