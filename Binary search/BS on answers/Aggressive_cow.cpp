@@ -19,9 +19,9 @@ In no manner can we increase the minimum distance beyond 3.
 5. If cows reach k before the loop breaking, we return true {i.e. mid is a possible solution}.
 6. Else, we return false.
 7. In our main function, using binary search from 1 {since that's the min distance between two cows} to the difference between the first and last stall {i.e. the max distance}.
-8. We check if mid is a possible solution. If yes, we save it in ans, and move to the higher mids because we need the maximum possible ans.
+8. We check if mid is a possible solution. If yes,  move to the higher mids because we need the maximum possible ans.
 9. Else, we check the left side of the array.
-10. Return ans.
+10. Return end.
 */
 
 //CODE:
@@ -54,14 +54,14 @@ public:
             int mid = start  + (end - start)/2;
 
             if(isPossible(nums, k, mid)) {
-                ans = mid;
+                
                 start = mid + 1;
             }
             else {
                 end = mid - 1;
             }
         }
-        return ans;
+        return end;
     }
 };
 
