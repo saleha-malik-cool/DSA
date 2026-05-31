@@ -107,3 +107,53 @@ deti hai.*/
 
 //Time Complexity:O(N) {Traversing through the string only once}
 //Space Complexity:O(N) {Recursion stack}
+
+//Code 2:
+class Solution {
+public:
+    int myAtoi(string s) {
+        int i =0;
+        bool started = false;
+        int sign=1;
+        long long ans=0;
+        while(i< s.length()){
+        if (!started && s[i]==' '){
+            i++;
+            continue;
+        }
+        if(!started &&( s[i]=='+'|| s[i]=='-')){
+            if(s[i]=='+'){
+                sign =1;
+                
+            }
+            else{
+                sign=-1;
+               
+            }
+
+            i++;
+            started=true;
+            continue;
+
+            
+        }
+         if(!isdigit(s[i])){
+            return sign*ans;
+        }int digit= s[i] -'0';
+        if(sign == 1 && ans > (INT_MAX - digit)/10){
+            return INT_MAX;
+}
+        if(sign == -1 && ans > ((long long)INT_MAX + 1 - digit)/10){
+            return INT_MIN;
+          
+        }
+       
+        
+        else{
+            started = true;
+            ans = ans*10+digit;
+            i++;
+        }
+    }
+    return sign*ans;
+}};
