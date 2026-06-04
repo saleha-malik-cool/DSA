@@ -83,3 +83,49 @@ Extra space is used only by the recursion stack (excluding the answer vector).
 3. Choice undo karo (pop_back)
 4. Next choice try karo
 */
+
+//## VERY EASY CODE:
+class Solution {
+public:
+    void binary(int n , string curr, vector<string>&ans){
+        if (curr.length()==n){
+            ans.push_back(curr);
+            return;
+        }
+        binary(n,curr+'0',ans);
+        if(curr.empty()|| curr.back()!='1'){
+            binary(n,curr+'1',ans);
+        }
+        return;
+    }
+    vector<string> generateBinaryStrings(int n) {
+        vector<string>ans;
+        binary(n,"",ans);
+        return ans;
+       
+    }
+};
+/*
+APPROACH:
+1. We create a recursive function binary with arguments:
+   int n, string curr, and vector<string>& ans.
+2. The string curr stores the current binary string being formed.
+3. If the length of curr becomes n, a valid binary string
+   has been generated.
+   Push curr into ans and return.
+4. We can always add '0' to the current string because
+   it does not violate any condition.
+   Therefore, recursively call the function with curr + '0'.
+5. To add '1', we first check:
+      curr.empty() || curr.back() != '1'
+6. If curr is empty or its last character is not '1',
+   then adding '1' will not create consecutive 1s.
+   Therefore, recursively call the function with curr + '1'.
+7. If the last character is already '1',
+   we do not add another '1' because consecutive 1s
+   are not allowed.
+8. In generateBinaryStrings(), create an answer vector ans.
+9. Call:
+      binary(n, "", ans);
+10. Return ans.
+*/
