@@ -9,43 +9,8 @@ Output: ["000", "001", "010", "100", "101"]
 Explanation: All strings are of length 3 and do not contain consecutive 1s.
 */
 //Code:
-class Solution {
-public:
-    void solve(int n , string curr, vector<string>& ans){
-        int len = curr.length();
-        if(len==n){
-            ans.push_back(curr);
-            return;
-        }
-       if(len==0){
-        curr.push_back('0');
-        solve(n,curr,ans);
-        curr.pop_back();
-        curr.push_back('1');
-        solve(n,curr,ans);
-       }
-       else if(curr[len-1]=='1'){
-        curr.push_back('0');
-        solve(n,curr,ans);
-       }
-       else{
-        curr.push_back('0');
-        solve(n,curr,ans);
-        curr.pop_back();
-        curr.push_back('1');
-        solve(n,curr,ans);
-       }
-       return;
-    }
 
-    vector<string> generateBinaryStrings(int n) {
-        vector<string>ans;
-        solve( n, "",  ans);
-        return ans;
-        
 
-    }
-};
 class Solution {
 public:
     void solve(int n , string curr, vector<string>& ans){
