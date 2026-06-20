@@ -106,3 +106,110 @@ In a simple array queue, the positions freed after pop operations are not reused
 Therefore, overflow may occur even when some spaces at the beginning of the array are empty. 
 This limitation can be overcome using a Circular Queue.
 */
+
+//Circular Queuee Code:
+//code:
+#include <iostream>
+using namespace std;
+
+class MyQueue {
+    int front;
+    int rear;
+    int size;
+    int* arr;
+
+public:
+    MyQueue(int n) {
+        size = n;
+        front = 0;
+        rear = 0;
+        arr = new int[size];
+    }
+
+    bool isEmpty() {
+        return front == rear;
+    }
+
+    bool isFull() {
+        return (rear + 1) % size == front;
+    }
+
+    void push(int x) {
+        if (isFull()) {
+            cout << "Queue Overflow" << endl;
+            return;
+        }
+
+        arr[rear] = x;
+        rear = (rear + 1) % size;
+    }
+
+    void pop() {
+        if (isEmpty()) {
+            cout << "Queue Underflow" << endl;
+            return;
+        }
+
+        cout << arr[front] << " popped" << endl;
+        front = (front + 1) % size;
+    }
+
+    int peek() {
+        if (isEmpty()) {
+            cout << "Queue Empty" << endl;
+            return -1;
+        }
+
+        return arr[front];
+    }
+};
+
+/*
+/*
+Approach:
+A Circular Queue is an improved version of a normal queue that overcomes the limitation of unused spaces after 
+deletion. It follows the FIFO (First In First Out) principle, where the element inserted first is removed first.
+We use an array to store the queue elements and maintain four variables:
+1. front -> points to the front element of the queue.
+2. rear  -> points to the next insertion position.
+3. count -> stores the current number of elements in the queue.
+4. size  -> maximum capacity of the queue.
+Initially:
+front = 0
+rear = 0
+count = 0
+Push Operation:
+- First check if the queue is full (count == size).
+- Insert the element at arr[rear].
+- Move rear circularly using:
+    rear = (rear + 1) % size
+- Increment count.
+Pop Operation:
+- Check if the queue is empty (count == 0).
+- Store the front element.
+- Move front circularly using:
+    front = (front + 1) % size
+- Decrement count.
+- Return the removed element.
+Peek Operation:
+- Check if the queue is empty.
+- Return the element at arr[front] without removing it.
+isEmpty Operation:
+- The queue is empty when:
+    count == 0
+Key Idea:
+The modulo (%) operator makes the queue circular. When front or rear reaches the last index of the array, 
+it automatically wraps around to index 0. This allows reuse of previously freed positions and prevents memory wastage.
+Time Complexity:
+Push      : O(1)
+Pop       : O(1)
+Peek      : O(1)
+isEmpty   : O(1)
+Space Complexity:
+O(size)
+Advantage:
+Unlike a simple array queue, the freed positions created after pop operations are reused efficiently,
+allowing optimal utilization of the array.
+*/
+
+*/
