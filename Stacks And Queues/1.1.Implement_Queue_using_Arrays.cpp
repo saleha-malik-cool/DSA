@@ -21,6 +21,32 @@ queue.peek(); // returns 5
 queue.pop(); // returns 5
 queue.isEmpty(); // returns false
 */
+
+/*
+Approach:
+A queue follows the FIFO (First In First Out) principle, meaning the element inserted first is removed first.
+We use an array to store the queue elements and two pointers:
+1. front -> points to the first element of the queue.
+2. rear -> points to the last element of the queue.
+Initially:
+front = 0
+rear = -1
+Push Operation:
+- First check if the queue is full (rear == size - 1).
+- Increment rear.
+- Insert the new element at arr[rear].
+Pop Operation:
+- Check if the queue is empty (front > rear).
+- Return the element at the front.
+- Increment front to move to the next element.
+Peek Operation:
+- Check if the queue is empty.
+- Return the element at the front without removing it.
+isEmpty Operation:
+- The queue is empty when front > rear.
+
+*/
+
 //Code:
 class ArrayQueue {
     int *arr;
@@ -71,29 +97,7 @@ public:
         delete[] arr;
     }
 };
-
 /*
-Approach:
-A queue follows the FIFO (First In First Out) principle, meaning the element inserted first is removed first.
-We use an array to store the queue elements and two pointers:
-1. front -> points to the first element of the queue.
-2. rear -> points to the last element of the queue.
-Initially:
-front = 0
-rear = -1
-Push Operation:
-- First check if the queue is full (rear == size - 1).
-- Increment rear.
-- Insert the new element at arr[rear].
-Pop Operation:
-- Check if the queue is empty (front > rear).
-- Return the element at the front.
-- Increment front to move to the next element.
-Peek Operation:
-- Check if the queue is empty.
-- Return the element at the front without removing it.
-isEmpty Operation:
-- The queue is empty when front > rear.
 Time Complexity:
 Push  : O(1)
 Pop   : O(1)
@@ -107,64 +111,6 @@ Therefore, overflow may occur even when some spaces at the beginning of the arra
 This limitation can be overcome using a Circular Queue.
 */
 
-//Circular Queuee Code:
-//code:
-#include <iostream>
-using namespace std;
-
-class MyQueue {
-    int front;
-    int rear;
-    int size;
-    int* arr;
-
-public:
-    MyQueue(int n) {
-        size = n;
-        front = 0;
-        rear = 0;
-        arr = new int[size];
-    }
-
-    bool isEmpty() {
-        return front == rear;
-    }
-
-    bool isFull() {
-        return (rear + 1) % size == front;
-    }
-
-    void push(int x) {
-        if (isFull()) {
-            cout << "Queue Overflow" << endl;
-            return;
-        }
-
-        arr[rear] = x;
-        rear = (rear + 1) % size;
-    }
-
-    void pop() {
-        if (isEmpty()) {
-            cout << "Queue Underflow" << endl;
-            return;
-        }
-
-        cout << arr[front] << " popped" << endl;
-        front = (front + 1) % size;
-    }
-
-    int peek() {
-        if (isEmpty()) {
-            cout << "Queue Empty" << endl;
-            return -1;
-        }
-
-        return arr[front];
-    }
-};
-
-/*
 /*
 Approach:
 A Circular Queue is an improved version of a normal queue that overcomes the limitation of unused spaces after 
@@ -200,6 +146,89 @@ isEmpty Operation:
 Key Idea:
 The modulo (%) operator makes the queue circular. When front or rear reaches the last index of the array, 
 it automatically wraps around to index 0. This allows reuse of previously freed positions and prevents memory wastage.
+
+*/
+
+*/
+
+
+
+//Circular Queuee Code:
+//code:
+#include <iostream>
+using namespace std;
+
+class MyQueue {
+    int front;
+    int rear;
+    int size;
+    int count;
+    int* arr;
+
+public:
+    MyQueue(int n) {
+        size = n;
+        arr = new int[size];
+
+        front = 0;
+        rear = 0;
+        count = 0;
+    }
+
+    bool isEmpty() {
+        return count == 0;
+    }
+
+    bool isFull() {
+        return count == size;
+    }
+
+    void push(int x) {
+        if (isFull()) {
+            cout << "Queue Overflow" << endl;
+            return;
+        }
+
+        arr[rear] = x;
+        rear = (rear + 1) % size;
+        count++;
+    }
+
+    void pop() {
+        if (isEmpty()) {
+            cout << "Queue Underflow" << endl;
+            return;
+        }
+
+        cout << arr[front] << " popped" << endl;
+        front = (front + 1) % size;
+        count--;
+    }
+
+    int peek() {
+        if (isEmpty()) {
+            cout << "Queue is Empty" << endl;
+            return -1;
+        }
+
+        return arr[front];
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is Empty" << endl;
+            return;
+        }
+
+        int i = front;
+        for (int j = 0; j < count; j++) {
+            cout << arr[i] << " ";
+            i = (i + 1) % size;
+        }
+        cout << endl;
+    }
+};
+/*
 Time Complexity:
 Push      : O(1)
 Pop       : O(1)
@@ -210,6 +239,4 @@ O(size)
 Advantage:
 Unlike a simple array queue, the freed positions created after pop operations are reused efficiently,
 allowing optimal utilization of the array.
-*/
-
 */
