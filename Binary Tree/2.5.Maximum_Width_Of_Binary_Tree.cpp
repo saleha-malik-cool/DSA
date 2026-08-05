@@ -61,34 +61,47 @@ Important Mistakes to Avoid
 */
 
 //CODE:
-while(!q.empty()) {
+class Solution {
+public:
+    
+    int widthOfBinaryTree(TreeNode* root) {
+        if(root==NULL)
+{
+    return 0;
+}        
+        queue <pair<TreeNode* , long long> > q;
+        q.push({root , 0});
+        int maxwidth =0;
+        while(!q.empty()){
+            int size = q.size();
+            long long start,end;
+            long long mini = q.front().second;
+            for(int i =0; i<size; i++){
+                auto curr = q.front();
+                q.pop();
+                long long index= curr.second - mini;
+                if(i==0){
+                    start = index;
+                }
+                if(i==size-1){
+                    end = index;
+                }
+                if(curr.first->left){
+                    q.push({curr.first->left, index*2+1});
+                }
+                if(curr.first->right){
+                    q.push({curr.first->right, index*2+2});
+                }
+                maxwidth = max(maxwidth,(int)(end-start +1 ));
+            }
+            
+        }
+        return maxwidth;
 
-    int size = q.size();
-    long long start, end;
-    long long mini = q.front().second;
 
-    for(int i = 0; i < size; i++) {
-
-        auto curr = q.front();
-        q.pop();
-
-        long long index = curr.second - mini;
-
-        if(i == 0)
-            start = index;
-
-        if(i == size - 1)
-            end = index;
-
-        if(curr.first->left)
-            q.push({curr.first->left, 2 * index + 1});
-
-        if(curr.first->right)
-            q.push({curr.first->right, 2 * index + 2});
     }
-
-    maxwidth = max(maxwidth, (int)(end - start + 1));
-}
+};
+        
 /*
 Time Complexity: O(N)
 Space Complexity: O(N)
